@@ -1,0 +1,24 @@
+; YEET22 tilted clip-space diagnostic shader
+
+.fvec projection[4]
+
+.constf constants(0.0, 1.0, 0.0, 0.0)
+.alias ones constants.yyyy
+
+.out outpos position
+.out outclr color
+
+.alias inpos v0
+
+.proc main
+        ; Preserve the complete incoming clip-space position,
+        ; including AvP's original perspective W component.
+        dp4 outpos.x, projection[0], inpos
+        dp4 outpos.y, projection[1], inpos
+        dp4 outpos.z, projection[2], inpos
+        dp4 outpos.w, projection[3], inpos
+
+        mov outclr, ones
+
+        end
+.end

@@ -1,0 +1,75 @@
+#include <3ds.h>
+#include <stdio.h>
+
+extern int AvP_EngineProbe3DS(void);
+
+static void ShowScreen(const char *status)
+{
+    consoleClear();
+
+    printf("Aliens vs Predator 3DS\n");
+    printf("Native bootstrap reached.\n");
+
+    if (status != NULL)
+        printf("\n%s\n", status);
+
+    printf("\nPress A for surface probe.\n");
+    printf("Press START to exit.\n");
+}
+
+int main(int argc, char **argv)
+{
+    (void)argc;
+    (void)argv;
+
+    gfxInitDefault();
+    consoleInit(GFX_TOP, NULL);
+
+    ShowScreen(NULL);
+
+    while (aptMainLoop())
+    {
+        hidScanInput();
+        u32 keys = hidKeysDown();
+
+        if (keys & KEY_START)
+            break;
+
+        if (keys & KEY_A)
+        {
+            int result;
+            char status[128];
+
+            printf("\nAllocating RGB565 surface...\n");
+
+            /*
+             * Keep native 3DS graphics initialized.
+             * The probe uses SDL only for a CPU memory surface.
+             */
+            result = AvP_EngineProbe3DS();
+
+            snprintf(
+                status,
+                sizeof(status),
+                "Surface probe returned: %d\n%s",
+                result,
+                result == 0
+                    ? "640x480 RGB565 surface succeeded."
+                    : result == 10
+                        ? "SDL core initialization failed."
+                        : result == 20
+                            ? "SDL surface allocation failed."
+                            : "SDL surface format check failed."
+            );
+
+            ShowScreen(status);
+        }
+
+        gfxFlushBuffers();
+        gfxSwapBuffers();
+        gspWaitForVBlank();
+    }
+
+    gfxExit();
+    return 0;
+}

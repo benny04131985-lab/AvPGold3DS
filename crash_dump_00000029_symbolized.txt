@@ -1,0 +1,160 @@
+Dump: /c/Projects/AVP3DS_Stereo/Source/crash_dump_00000029.dmp
+Processor: Arm11 (core 0)
+Exception: prefetch abort (svcBreak: panic)
+Fault status: Debug event
+Current process: 3dsx_app (000400000D921E00)
+
+Register dump:
+  r0      0x00000000
+  r1      0x00010002
+  r2      0x30189C00
+  r3      0x80000000
+  r4      0x005DB448
+  r5      0x00000001
+  r6      0x00000001
+  r7      0x08007EC4
+  r8      0x005DA7D4
+  r9      0x00010253
+  r10     0x005DB44C
+  r11     0x005DB450
+  r12     0x00010000
+  sp      0x08007E98
+  lr      0x0029D1B0
+  pc      0x002A7A60
+  cpsr    0x280F0010
+  dfsr    0x00001001
+  ifsr    0x00000002
+  far     0x8AA415E1
+  fpexc   0x40000700
+  fpinst  0xEE890A08
+  fpinst2 0xEE890A08
+
+ELF: /c/Projects/AVP3DS_Stereo/Source/AvP_Gold.elf
+addr2line: /opt/devkitpro/devkitARM/bin/arm-none-eabi-addr2line
+
+Symbolized candidate call chain:
+pc                           0x002A7A60
+    svcBreak
+    /home/davem/projects/devkitpro/pacman-packages/libctru/src/libctru-2.7.0/libctru/source/svc.s:401
+lr                           0x0029D1B0
+    GPUCMD_AddInternal
+    /home/davem/projects/devkitpro/pacman-packages/libctru/src/libctru-2.7.0/libctru/source/gpu/gpu.c:33 (discriminator 4)
+    GPUCMD_Add
+    /home/davem/projects/devkitpro/pacman-packages/libctru/src/libctru-2.7.0/libctru/source/gpu/gpu.c:54 (discriminator 4)
+r4                           0x005DB448
+    ??
+    /home/davem/projects/devkitpro/pacman-packages/libctru/src/libctru-2.7.0/libctru/source/gpu/gpu.c:15
+r8                           0x005DA7D4
+    ??
+    /Users/davem/projects/devkitpro/pacman-packages/citro3d/src/citro3d-1.7.1/source/uniforms.c:4
+r10                          0x005DB44C
+    ??
+    /home/davem/projects/devkitpro/pacman-packages/libctru/src/libctru-2.7.0/libctru/source/gpu/gpu.c:14
+r11                          0x005DB450
+    ??
+    /home/davem/projects/devkitpro/pacman-packages/libctru/src/libctru-2.7.0/libctru/source/gpu/gpu.c:13
+stack+0x014@0x08007EAC       0x005DA7D4
+    ??
+    /Users/davem/projects/devkitpro/pacman-packages/citro3d/src/citro3d-1.7.1/source/uniforms.c:4
+stack+0x018@0x08007EB0       0x005DA6F0
+    ??
+    /Users/davem/projects/devkitpro/pacman-packages/citro3d/src/citro3d-1.7.1/source/uniforms.c:8
+stack+0x01C@0x08007EB4       0x00315000
+    ??
+    C:\Projects\AVP3DS_Stereo\Source/src/main_3ds.c:267
+stack+0x024@0x08007EBC       0x00297AB4
+    GPUCMD_AddSingleParam
+    /opt/devkitpro/libctru/include/3ds/gpu/gpu.h:105
+    C3D_DrawArrays
+    /Users/davem/projects/devkitpro/pacman-packages/citro3d/src/citro3d-1.7.1/source/drawArrays.c:28
+stack+0x038@0x08007ED0       0x00350CA8
+    __preinit_array_start
+    ??:?
+stack+0x044@0x08007EDC       0x00102284
+    AvP3DS_DrawTriangles
+    C:\Projects\AVP3DS_Stereo\Source/src/main_3ds.c:2010
+stack+0x060@0x08007EF8       0x005B5394
+    ??
+    C:\Projects\AVP3DS_Stereo\Source/src/stubs.c:111
+stack+0x068@0x08007F00       0x004ED5F0
+    ??
+    C:\Projects\AVP3DS_Stereo\Source/src/avp/win95/kzsort.c:43
+stack+0x06C@0x08007F04       0x001711C4
+    DoHModel
+    C:\Projects\AVP3DS_Stereo\Source/src/avp/hmodel.c:2186
+stack+0x07C@0x08007F14       0x00381820
+    ??
+    C:\Projects\AVP3DS_Stereo\Source/src/opengl.c:111
+stack+0x080@0x08007F18       0x004C3EC8
+    ??
+    C:\Projects\AVP3DS_Stereo\Source/src/avp/player.c:97
+stack+0x088@0x08007F20       0x00568678
+    ??
+    C:\Projects\AVP3DS_Stereo\Source/src/map.c:23
+stack+0x09C@0x08007F34       0x00108158
+    FlushTriangleBuffers
+    C:\Projects\AVP3DS_Stereo\Source/src/opengl.c:866
+stack+0x0A8@0x08007F40       0x004C454C
+    ??
+    C:\Projects\AVP3DS_Stereo\Source/src/avp/player.c:99
+stack+0x0AC@0x08007F44       0x00108E5C
+    D3D_DecalSystem_End
+    C:\Projects\AVP3DS_Stereo\Source/src/opengl.c:1288
+stack+0x0B0@0x08007F48       0x004C454C
+    ??
+    C:\Projects\AVP3DS_Stereo\Source/src/avp/player.c:99
+stack+0x0B4@0x08007F4C       0x00173BC0
+    MaintainHUD
+    C:\Projects\AVP3DS_Stereo\Source/src/avp/hud.c:336
+stack+0x0B8@0x08007F50       0x004ED748
+    ??
+    ??:0
+stack+0x0BC@0x08007F54       0x005B94F4
+    ??
+    ??:0
+stack+0x0C0@0x08007F58       0x004ED5F8
+    ??
+    C:\Projects\AVP3DS_Stereo\Source/src/avp/win95/kzsort.c:44
+stack+0x0C4@0x08007F5C       0x005B9500
+    ??
+    ??:0
+stack+0x0D4@0x08007F6C       0x004ED5F0
+    ??
+    C:\Projects\AVP3DS_Stereo\Source/src/avp/win95/kzsort.c:43
+stack+0x0E8@0x08007F80       0x005B27DC
+    ??
+    ??:0
+stack+0x0EC@0x08007F84       0x00399334
+    ??
+    C:\Projects\AVP3DS_Stereo\Source/src/avp/avpview.c:71
+stack+0x0F0@0x08007F88       0x00568678
+    ??
+    C:\Projects\AVP3DS_Stereo\Source/src/map.c:23
+stack+0x0F8@0x08007F90       0x002D330A
+    ??
+    ??:0
+stack+0x0FC@0x08007F94       0x0045201C
+    ??
+    C:\Projects\AVP3DS_Stereo\Source/src/avp/game.c:87
+stack+0x100@0x08007F98       0x003518A8
+    ??
+    C:\Projects\AVP3DS_Stereo\Source/src/main.c:433
+stack+0x108@0x08007FA0       0x002D330A
+    ??
+    ??:0
+stack+0x11C@0x08007FB4       0x00106038
+    MainGame_Update
+    C:\Projects\AVP3DS_Stereo\Source/src/main.c:2343
+    main_loop
+    C:\Projects\AVP3DS_Stereo\Source/src/main.c:2218
+    AvP_LegacyMain
+    C:\Projects\AVP3DS_Stereo\Source/src/main.c:2157
+stack+0x124@0x08007FBC       0x002C2384
+    _free_r
+    ??:?
+stack+0x13C@0x08007FD4       0x00103C98
+    main
+    C:\Projects\AVP3DS_Stereo\Source/src/main_3ds.c:3855
+stack+0x140@0x08007FD8       0x005DEDE0
+    saved_stack
+    stack_adjust.o:?

@@ -1,0 +1,82 @@
+#include <3ds.h>
+#include <stdio.h>
+
+extern int AvP_EngineProbe3DS(void);
+
+static void ShowBootstrapScreen(const char *status)
+{
+    consoleClear();
+
+    printf("Aliens vs Predator 3DS\n");
+    printf("Native bootstrap reached.\n");
+
+    if (status != NULL)
+        printf("\n%s\n", status);
+
+    printf("\nPress A for engine probe.\n");
+    printf("Press START to exit.\n");
+}
+
+int main(int argc, char **argv)
+{
+    (void)argc;
+    (void)argv;
+
+    gfxInitDefault();
+    consoleInit(GFX_TOP, NULL);
+
+    ShowBootstrapScreen(NULL);
+
+    while (aptMainLoop())
+    {
+        hidScanInput();
+        u32 keys = hidKeysDown();
+
+        if (keys & KEY_START)
+            break;
+
+        if (keys & KEY_A)
+        {
+            int result;
+            char status[96];
+
+            printf("\nStarting SDL/engine probe...\n");
+
+            gfxFlushBuffers();
+            gfxSwapBuffers();
+            gspWaitForVBlank();
+
+            /*
+             * Give SDL2 temporary ownership of the 3DS video subsystem.
+             */
+            gfxExit();
+
+            result = AvP_EngineProbe3DS();
+
+            /*
+             * SDL has shut down. Restore the native diagnostic console.
+             */
+            gfxInitDefault();
+            consoleInit(GFX_TOP, NULL);
+
+            snprintf(
+                status,
+                sizeof(status),
+                "Engine probe returned: %d\n%s",
+                result,
+                result == 0
+                    ? "SDL surface and engine core initialized."
+                    : "Probe stopped at an initialization checkpoint."
+            );
+
+            ShowBootstrapScreen(status);
+        }
+
+        gfxFlushBuffers();
+        gfxSwapBuffers();
+        gspWaitForVBlank();
+    }
+
+    gfxExit();
+    return 0;
+}

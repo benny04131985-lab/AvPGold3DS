@@ -1,0 +1,24 @@
+; YEET24 textured-world vertex interface
+
+.fvec projection[4]
+
+.out outpos position
+.out outtc0 texcoord0
+.out outclr color
+
+.alias inpos v0
+.alias intex v1
+.alias inclr v2
+
+.proc main
+        ; Preserve AvP's complete incoming clip-space position.
+        dp4 outpos.x, projection[0], inpos
+        dp4 outpos.y, projection[1], inpos
+        dp4 outpos.z, projection[2], inpos
+        dp4 outpos.w, projection[3], inpos
+
+        mov outtc0, intex
+        mov outclr, inclr
+
+        end
+.end

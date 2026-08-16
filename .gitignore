@@ -1,0 +1,45 @@
+# Local 3DS builds
+AvP_Gold.3dsx
+AvP_Gold.elf
+AvP_Gold.smdh
+*.3dsx
+*.elf
+*.cia
+*.smdh
+*.map
+*.o
+*.obj
+
+# Diagnostics / logs
+*.log
+AVP_SHIP1_PERF_*.log
+AVP3DS_*_AUDIT_*.txt
+AVP3DS_*_AUDIT_*.json
+
+# Backups / patch leftovers
+*.bak
+*.orig
+*.rej
+*.tmp
+*~
+
+# Generated release work
+SHIP_FREEZE/
+dist/
+build/
+build_3ds/
+cmake-build-*/
+
+# Local retail data roots
+RetailData/
+Retail_Data/
+GameData/
+Game_Data/
+OriginalData/
+Original_Data/
+
+# Editor / OS
+.vs/
+.idea/
+__pycache__/
+.DS_Store

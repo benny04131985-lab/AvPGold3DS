@@ -1,0 +1,30 @@
+#include <3ds.h>
+#include <stdio.h>
+
+int main(int argc, char **argv)
+{
+    (void)argc;
+    (void)argv;
+
+    gfxInitDefault();
+    consoleInit(GFX_TOP, NULL);
+
+    printf("Aliens vs Predator 3DS\n");
+    printf("Native bootstrap reached.\n");
+    printf("\nPress START to exit.\n");
+
+    while (aptMainLoop())
+    {
+        hidScanInput();
+
+        if (hidKeysDown() & KEY_START)
+            break;
+
+        gfxFlushBuffers();
+        gfxSwapBuffers();
+        gspWaitForVBlank();
+    }
+
+    gfxExit();
+    return 0;
+}

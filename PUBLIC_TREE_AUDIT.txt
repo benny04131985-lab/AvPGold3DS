@@ -1,0 +1,39 @@
+AVP3DS v1.0.0 PUBLIC TREE OBJECTIVE AUDIT
+================================================
+Milestone: AVP3DS-V1.0.0-FINALSHIP1
+
+RESULT: PASS
+
+Copied public source files before generated docs: 954
+Copied public source bytes before generated docs: 37667140
+
+Release-source cleanup:
+  HEADROOM2 wrappers removed: 18
+  benchmark #ifdef blocks removed: 4
+  benchmark calls removed: 5
+  development source mutated: NO
+
+Final required marker:
+  AVP3DS-V1.0.0-FINALSHIP1: PRESENT
+
+Public safety:
+  prohibited build/log/backups: NONE
+  suspicious retail/media extensions: NONE
+  >=100 MiB GitHub files: NONE
+  50-99 MiB warnings: 0
+
+Skipped source entries by reason:
+     550  build/log/backup artifact
+       1  development/generated directory
+      79  root engineering patch/audit tool
+
+Hardware-approved development-source SHA-256 before staging:
+  2b4fde9e0bb17fabe8aaca7a3be9155f732a6e32efaff148c79c8c0cfec6a818  Makefile.3ds
+  e2b0727b0392d79a26842d133383bc7fc5893d1043bc015f1eeaa7ef4c5b8db0  src/avp/game.c
+  6ddce2f35b63da3725800c55d54e897b3b490a3004aa84fb0d8c99d2a3fa4fa5  src/avp/pmove.c
+  3698579ca9256dcb800d3785486c61311c3cb4c73f96c3e2b920efc992fed3f1  src/avp/psnd.c
+  c17f98a365e24a2b119863722da31aeaf912405106a7e8cafc9a6583e797d52f  src/avp/win95/frontend/avp_menudata.c
+  20c1dcd8ce59181ab2c998f97791733bbb5d3538da9da62bd9bffb2a7d5e1131  src/avp/win95/frontend/avp_menus.c
+  8a66da08d8ce6710855eec3ea590cfaf0a00c824be6f4234290d28064bb8754b  src/main.c
+  06ccdd4553f568432e8a71bd722194f3c32ebc5e52516565683c567056dd9bca  src/main_3ds.c
+  4397eb7bad240c9fb5b5e01fdeb954e078da7db3e1f51482f0361f3fbf43a5bd  src/psnd_3ds.c

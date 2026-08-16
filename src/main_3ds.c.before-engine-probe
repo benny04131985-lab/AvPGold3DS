@@ -1,0 +1,48 @@
+#include <3ds.h>
+#include <stdio.h>
+
+extern int AvP_LegacyMain(int argc, char *argv[]);
+
+int main(int argc, char **argv)
+{
+    gfxInitDefault();
+    consoleInit(GFX_TOP, NULL);
+
+    printf("Aliens vs Predator 3DS\n");
+    printf("Native bootstrap reached.\n");
+    printf("\nPress A to start engine.\n");
+    printf("Press START to exit safely.\n");
+
+    while (aptMainLoop())
+    {
+        hidScanInput();
+        u32 keys = hidKeysDown();
+
+        if (keys & KEY_START)
+            break;
+
+        if (keys & KEY_A)
+        {
+            printf("\nHanding control to AvP engine...\n");
+
+            gfxFlushBuffers();
+            gfxSwapBuffers();
+            gspWaitForVBlank();
+
+            /*
+             * SDL2 will take over video/system ownership.
+             * Shut down the bootstrap graphics first.
+             */
+            gfxExit();
+
+            return AvP_LegacyMain(argc, argv);
+        }
+
+        gfxFlushBuffers();
+        gfxSwapBuffers();
+        gspWaitForVBlank();
+    }
+
+    gfxExit();
+    return 0;
+}

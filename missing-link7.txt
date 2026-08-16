@@ -1,0 +1,6 @@
+PlatUpdatePlayer
+PlayMenuBackgroundBink
+SmackerSoundVolume
+StartFMVAtFrame
+StartMenuBackgroundBink
+UpdateSoundFrequencies

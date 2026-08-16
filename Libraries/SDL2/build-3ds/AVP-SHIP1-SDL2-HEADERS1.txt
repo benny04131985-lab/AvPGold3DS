@@ -1,0 +1,6 @@
+AVP-SHIP1-SDL2-HEADERS1
+Donor: /c/Projects/Marathon_3DS/Libraries/SDL2/include/SDL2
+Missing public headers supplemented: 1
+SDL_platform.h SHA256: 42defaf842e5ce8046684c98fd3fdbcac03868104517e038e78062ce37a61549
+libSDL2.a SHA256: c31fa726350ab35539882d34a031bf56d5ad93b424d4da083a5b18642ed4d8f1
+Existing local headers and libSDL2.a were preserved.

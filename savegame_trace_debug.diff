@@ -1,0 +1,359 @@
+diff --git a/src/avp/savegame.c b/src/avp/savegame.c
+index 5125995..671c851 100644
+--- a/src/avp/savegame.c
++++ b/src/avp/savegame.c
+@@ -302,11 +302,42 @@ void* GetPointerForSaveBlock(unsigned int size)
+ 		//buffer incremented in lots of 100000 bytes (more or less)
+ 		int newBufferSize = ((spaceNeeded /100000)+1)*100000;
+ 
+-		//allocate the memory
+-		SaveInfo.BufferStart = (char*) realloc(SaveInfo.BufferStart,newBufferSize);
++		//allocate the memory safely
++		{
++		        char *newBuffer =
++		                (char*)realloc(
++		                        SaveInfo.BufferStart,
++		                        newBufferSize);
++
++		        if(newBuffer == NULL)
++		        {
++#ifdef __3DS__
++		                FILE *trace =
++		                        fopen(
++		                                "sdmc:/avp_save_trace.log",
++		                                "a");
++
++		                if(trace)
++		                {
++		                        fprintf(
++		                                trace,
++		                                "SAVE REALLOC FAILED: requested=%d used=%d oldSize=%d\n",
++		                                newBufferSize,
++		                                SaveInfo.BufferSpaceUsed,
++		                                SaveInfo.BufferSize);
++		                        fclose(trace);
++		                }
++#endif
++		                return NULL;
++		        }
++
++		        SaveInfo.BufferStart = newBuffer;
++		}
+ 
+ 		//correct the position etc.
+-		SaveInfo.BufferPos = SaveInfo.BufferStart + SaveInfo.BufferSpaceUsed;
++		SaveInfo.BufferPos =
++		        SaveInfo.BufferStart +
++		        SaveInfo.BufferSpaceUsed;
+ 		SaveInfo.BufferSpaceLeft += (newBufferSize - SaveInfo.BufferSize);
+ 		SaveInfo.BufferSize = newBufferSize;
+ 	
+@@ -403,7 +434,26 @@ void SaveGame()
+ 	int headerLength;
+ 	HuffmanPackage *packagePtr;
+ 
+-	//make sure there is a save request
++	
++#ifdef __3DS__
++        {
++                FILE *trace =
++                        fopen(
++                                "sdmc:/avp_save_trace.log",
++                                "w");
++
++                if(trace)
++                {
++                        fprintf(
++                                trace,
++                                "SAVE ENTER slot=%d\n",
++                                SaveGameRequest);
++                        fclose(trace);
++                }
++        }
++#endif
++
++//make sure there is a save request
+ 	if(SaveGameRequest ==  SAVELOAD_REQUEST_NONE) return;
+ 
+ 	if(SaveGameRequest<0 || SaveGameRequest>=NUMBER_OF_SAVE_SLOTS)
+@@ -413,44 +463,279 @@ void SaveGame()
+ 	}
+ 
+ 	//check that we are allowed to save at this point
+-	if(!SaveGameAllowed())
++	#ifdef __3DS__
++	{
++	        FILE *trace = fopen("sdmc:/avp_save_trace.log", "a");
++	        if(trace)
++	        {
++	                fprintf(trace, "BEFORE SAVE_ALLOWED\\n");
++	                fclose(trace);
++	        }
++	}
++	#endif
++
++	int avp3dsSaveAllowed = SaveGameAllowed();
++
++	#ifdef __3DS__
++	{
++	        FILE *trace = fopen("sdmc:/avp_save_trace.log", "a");
++	        if(trace)
++	        {
++	                fprintf(
++	                        trace,
++	                        "AFTER SAVE_ALLOWED result=%d\\n",
++	                        avp3dsSaveAllowed);
++	                fclose(trace);
++	        }
++	}
++	#endif
++
++	if(!avp3dsSaveAllowed)
+ 	{
+ 		//cancel request
+ 		SaveGameRequest = SAVELOAD_REQUEST_NONE;
+ 		return;	
+ 	}
+ 
++	#ifdef __3DS__
++	{
++	        FILE *trace =
++	                fopen(
++	                        "sdmc:/avp_save_trace.log",
++	                        "a");
++	        if(trace)
++	        {
++	                fprintf(trace, "INIT\\n");
++	                fclose(trace);
++	        }
++	}
++	#endif
+ 	InitSaveGame();
+ 
++	#ifdef __3DS__
++	{
++	        FILE *trace =
++	                fopen(
++	                        "sdmc:/avp_save_trace.log",
++	                        "a");
++	        if(trace)
++	        {
++	                fprintf(trace, "LEVEL_HEADER\\n");
++	                fclose(trace);
++	        }
++	}
++	#endif
+ 	SaveLevelHeader();
+ 
+ 	headerLength = SaveInfo.BufferSpaceUsed;
+ 
++	#ifdef __3DS__
++	{
++	        FILE *trace =
++	                fopen(
++	                        "sdmc:/avp_save_trace.log",
++	                        "a");
++	        if(trace)
++	        {
++	                fprintf(trace, "DEAD_STRATEGIES\\n");
++	                fclose(trace);
++	        }
++	}
++	#endif
+ 	SaveDeadStrategies();
+ 
++	#ifdef __3DS__
++	{
++	        FILE *trace =
++	                fopen(
++	                        "sdmc:/avp_save_trace.log",
++	                        "a");
++	        if(trace)
++	        {
++	                fprintf(trace, "STRATEGIES\\n");
++	                fclose(trace);
++	        }
++	}
++	#endif
+ 	SaveStrategies();
+ 
++	#ifdef __3DS__
++	{
++	        FILE *trace =
++	                fopen(
++	                        "sdmc:/avp_save_trace.log",
++	                        "a");
++	        if(trace)
++	        {
++	                fprintf(trace, "HIVE\\n");
++	                fclose(trace);
++	        }
++	}
++	#endif
+ 	SaveHiveSettings();
+ 
++	#ifdef __3DS__
++	{
++	        FILE *trace =
++	                fopen(
++	                        "sdmc:/avp_save_trace.log",
++	                        "a");
++	        if(trace)
++	        {
++	                fprintf(trace, "MARINE_SQUAD\\n");
++	                fclose(trace);
++	        }
++	}
++	#endif
+ 	SaveMarineSquadState();
+ 
++	#ifdef __3DS__
++	{
++	        FILE *trace =
++	                fopen(
++	                        "sdmc:/avp_save_trace.log",
++	                        "a");
++	        if(trace)
++	        {
++	                fprintf(trace, "MISC_GLOBALS\\n");
++	                fclose(trace);
++	        }
++	}
++	#endif
+ 	SaveMiscGlobalStuff();
+ 
++	#ifdef __3DS__
++	{
++	        FILE *trace =
++	                fopen(
++	                        "sdmc:/avp_save_trace.log",
++	                        "a");
++	        if(trace)
++	        {
++	                fprintf(trace, "SOUNDS\\n");
++	                fclose(trace);
++	        }
++	}
++	#endif
+ 	Save_SoundsWithNoReference();
+ 
+ 	//save particles etc.
++	#ifdef __3DS__
++	{
++	        FILE *trace =
++	                fopen(
++	                        "sdmc:/avp_save_trace.log",
++	                        "a");
++	        if(trace)
++	        {
++	                fprintf(trace, "DECALS\\n");
++	                fclose(trace);
++	        }
++	}
++	#endif
+ 	Save_Decals();
++	#ifdef __3DS__
++	{
++	        FILE *trace =
++	                fopen(
++	                        "sdmc:/avp_save_trace.log",
++	                        "a");
++	        if(trace)
++	        {
++	                fprintf(trace, "PARTICLES\\n");
++	                fclose(trace);
++	        }
++	}
++	#endif
+ 	Save_Particles();
++	#ifdef __3DS__
++	{
++	        FILE *trace =
++	                fopen(
++	                        "sdmc:/avp_save_trace.log",
++	                        "a");
++	        if(trace)
++	        {
++	                fprintf(trace, "VOLUMETRICS\\n");
++	                fclose(trace);
++	        }
++	}
++	#endif
+ 	Save_VolumetricExplosions();
++	#ifdef __3DS__
++	{
++	        FILE *trace =
++	                fopen(
++	                        "sdmc:/avp_save_trace.log",
++	                        "a");
++	        if(trace)
++	        {
++	                fprintf(trace, "PHEROMONES\\n");
++	                fclose(trace);
++	        }
++	}
++	#endif
+ 	Save_PheromoneTrails();
++	#ifdef __3DS__
++	{
++	        FILE *trace =
++	                fopen(
++	                        "sdmc:/avp_save_trace.log",
++	                        "a");
++	        if(trace)
++	        {
++	                fprintf(trace, "LIGHTS\\n");
++	                fclose(trace);
++	        }
++	}
++	#endif
+ 	Save_LightElements();
+ 
++	#ifdef __3DS__
++	{
++	        FILE *trace =
++	                fopen(
++	                        "sdmc:/avp_save_trace.log",
++	                        "a");
++	        if(trace)
++	        {
++	                fprintf(trace, "MESSAGES\\n");
++	                fclose(trace);
++	        }
++	}
++	#endif
+ 	Save_MessageHistory();
+ 
++	#ifdef __3DS__
++	{
++	        FILE *trace =
++	                fopen(
++	                        "sdmc:/avp_save_trace.log",
++	                        "a");
++	        if(trace)
++	        {
++	                fprintf(trace, "WEAPONS\\n");
++	                fclose(trace);
++	        }
++	}
++	#endif
+ 	Save_WeaponsCGlobals();
+ 
+ 
+ 	//get the filename
++	#ifdef __3DS__
++	{
++	        FILE *trace =
++	                fopen(
++	                        "sdmc:/avp_save_trace.log",
++	                        "a");
++	        if(trace)
++	        {
++	                fprintf(trace, "FILENAME\\n");
++	                fclose(trace);
++	        }
++	}
++	#endif
+ 	GetFilenameForSaveSlot(SaveGameRequest,filename);
+ 	
+ 	//clear the save request
