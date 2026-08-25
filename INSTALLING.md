@@ -1,4 +1,4 @@
-# Installing AvP3DS v1.0.0
+# Installing AvP3DS v1.0.4
 
 1. Use a homebrew-capable Nintendo 3DS. Final hardware validation targeted New
    Nintendo 3DS hardware.
