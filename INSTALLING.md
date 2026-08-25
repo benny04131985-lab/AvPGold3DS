@@ -8,13 +8,9 @@
    data using the layout expected by this source build.
 4. Do not copy development performance logs or audit files to the SD card.
 
-Runtime/resource strings resolved from the final source snapshot:
+FOLDER LAYOUT
 
-- `romfs:/Alien_HUD_Backdrop_320x240.rgba`
-- `romfs:/Hack-i-Ben_AVP3DS.t3x`
-- `romfs:/Marine_WY_HUD.rgba`
-- `romfs:/Predator_HUD_Backdrop_320x240.rgba`
-- `sdmc:/AVP_SHIP1_PERF_%llu_%08lx.log`
+/SD/3ds/AVP_Gold/*.avp, avp_huds, avp_rifs, fastfile, FMVs, AvP_Gold.3dsx*
 
 The GitHub release/source package intentionally does not include commercial
 retail game data.
