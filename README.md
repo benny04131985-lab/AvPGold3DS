@@ -1,4 +1,5 @@
 UPDATE - I have been made aware of a bug that causes hitching, frame stuttering, and unfavorable performance. There is a situation with the original music/fmv files that is at fault along with a work-around that was not distributed in the GitHub version. I will release an initial hotfix to address the performance issue, and will follow-up with a solution to the retail music/fmv directly. Thank you for you patience as I get this sorted.
+UPDATE2 - Worse issues are arising with contaminated updates. Refrain from downloads until v1.0.4 is released please! 
 
 # AvP3DS
 
