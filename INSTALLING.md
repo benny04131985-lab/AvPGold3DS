@@ -10,7 +10,7 @@
 
 FOLDER LAYOUT
 
-/SD/3ds/AVP_Gold/*.avp, avp_huds, avp_rifs, fastfile, FMVs, AvP_Gold.3dsx*
+/SD/3ds/AVP_Gold/*.avp, avp_huds, avp_rifs, fastfile, FMVs, AvP_Gold.3dsx, plus ALL retail AVPGOLD main folder files... i.e. cdtracks.txt, default.cfg, galaxy.dll, etc.....*
 
 The GitHub release/source package intentionally does not include commercial
 retail game data.
