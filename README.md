@@ -1,4 +1,4 @@
-UPDATE3 - 1.0.4 is released and fixes a number of small issues, including anyone having stuttering or missing music. I am aware of the intro videos not playing as well as the in-game "messages", I'm working on a patch to enable them now. Thanks for your patience! :D
+UPDATE3 - 1.0.5 is released and fixes a number of small issues, including anyone having stuttering or missing music. The intro videos (although audio is a little choppy) work, along with the voice messages and CD music. Several people have asked for .CIAs of our projects and I assure you it's on my to-do list! :D
 
 # AvP3DS
 
